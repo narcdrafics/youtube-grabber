@@ -55,6 +55,12 @@ export default function EnglishHomePage() {
         {/* Main Input Form */}
         <div className="w-full max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
           <InputForm lang="en" />
+          
+          <div className="mt-6 flex justify-center gap-6">
+            <span className="text-red-500 text-xs font-semibold">Download Thumbnails</span>
+            <span className="text-white/10">|</span>
+            <a href="/en/tags" className="text-white/30 hover:text-white text-xs transition-colors underline underline-offset-4 decoration-white/10">Tag Extractor</a>
+          </div>
         </div>
 
         {/* Features / SEO Content */}
