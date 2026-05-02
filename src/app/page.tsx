@@ -51,9 +51,15 @@ export default function HomePage() {
         </div>
 
         {/* Main input card */}
-        <div className="w-full max-w-2xl">
+        <div className="w-full max-w-2xl animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
           <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/50">
             <InputForm />
+          </div>
+          
+          <div className="mt-6 flex justify-center gap-6">
+            <span className="text-red-500 text-xs font-semibold">Baixar Thumbnails</span>
+            <span className="text-white/10">|</span>
+            <a href="/tags" className="text-white/30 hover:text-white text-xs transition-colors underline underline-offset-4 decoration-white/10">Extrator de Tags</a>
           </div>
         </div>
 
