@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import InputForm from "@/components/InputForm";
 import TrendingSection from "@/components/TrendingSection";
 import Script from "next/script";
