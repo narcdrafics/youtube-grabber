@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "controle-obras-c889d"
-  }
+  },
+  "targets": {
+    "controle-obras-c889d": {
+      "hosting": {
+        "thumbnailsgrabber": [
+          "thumbnailsgrabber"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }
