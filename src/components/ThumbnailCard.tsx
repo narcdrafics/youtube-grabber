@@ -6,9 +6,32 @@ import type { Thumbnail } from "@/lib/youtube";
 interface ThumbnailCardProps {
   thumbnail: Thumbnail;
   videoId: string;
+  lang?: "pt" | "en";
 }
 
-export default function ThumbnailCard({ thumbnail, videoId }: ThumbnailCardProps) {
+const translations = {
+  pt: {
+    notAvailable: "não disponível",
+    openTab: "Abrir em nova aba",
+    copyUrl: "Copiar URL",
+    copied: "Copiado!",
+    imgAlt: (label: string, id: string) => `Thumbnail ${label} do vídeo ${id}`,
+  },
+  en: {
+    notAvailable: "not available",
+    openTab: "Open in new tab",
+    copyUrl: "Copy URL",
+    copied: "Copied!",
+    imgAlt: (label: string, id: string) => `Thumbnail ${label} from video ${id}`,
+  },
+};
+
+export default function ThumbnailCard({
+  thumbnail,
+  videoId,
+  lang = "pt",
+}: ThumbnailCardProps) {
+  const t = translations[lang];
   const [copied, setCopied] = useState(false);
   const [imgError, setImgError] = useState(false);
 
@@ -57,7 +80,7 @@ export default function ThumbnailCard({ thumbnail, videoId }: ThumbnailCardProps
         </svg>
         <span className="text-sm text-center">
           <span className="font-semibold text-white/60">{thumbnail.label}</span>
-          <br />não disponível
+          <br />{t.notAvailable}
         </span>
       </div>
     );
@@ -73,7 +96,7 @@ export default function ThumbnailCard({ thumbnail, videoId }: ThumbnailCardProps
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={thumbnail.url}
-          alt={`Thumbnail ${thumbnail.label} do vídeo ${videoId}`}
+          alt={t.imgAlt(thumbnail.label, videoId)}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           onError={() => setImgError(true)}
           loading="lazy"
@@ -115,7 +138,7 @@ export default function ThumbnailCard({ thumbnail, videoId }: ThumbnailCardProps
             id={`open-${thumbnail.quality}`}
             onClick={() => window.open(thumbnail.url, "_blank")}
             className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-all duration-200 active:scale-95"
-            title="Abrir em nova aba"
+            title={t.openTab}
           >
             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -132,7 +155,7 @@ export default function ThumbnailCard({ thumbnail, videoId }: ThumbnailCardProps
                 ? "bg-green-500/20 text-green-400 border border-green-500/30"
                 : "bg-white/10 hover:bg-white/20 text-white"
             }`}
-            title="Copiar URL"
+            title={t.copyUrl}
           >
             {copied ? (
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,7 +167,7 @@ export default function ThumbnailCard({ thumbnail, videoId }: ThumbnailCardProps
                   d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
               </svg>
             )}
-            {copied ? "Copiado!" : "Copy URL"}
+            {copied ? t.copied : "Copy URL"}
           </button>
         </div>
       </div>

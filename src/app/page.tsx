@@ -116,9 +116,13 @@ export default function HomePage() {
         </section>
 
         {/* Footer */}
-        <footer className="mt-16 text-white/20 text-xs text-center">
-          YouTube Thumbnail Downloader · Não afiliado ao YouTube ·{" "}
-          <span>Imagens são propriedade dos respectivos criadores</span>
+        <footer className="mt-16 text-white/20 text-xs text-center space-y-2">
+          <p>YouTube Thumbnail Downloader · Não afiliado ao YouTube</p>
+          <div className="flex justify-center gap-4">
+            <span>Imagens são propriedade dos respectivos criadores</span>
+            <span className="text-white/10">|</span>
+            <a href="/en" className="text-red-500/50 hover:text-red-500 transition-colors font-medium">English Version</a>
+          </div>
         </footer>
       </div>
     </main>

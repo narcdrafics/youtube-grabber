@@ -1,8 +1,21 @@
 interface VideoInfoProps {
   videoId: string;
+  lang?: "pt" | "en";
 }
 
-export default function VideoInfo({ videoId }: VideoInfoProps) {
+const translations = {
+  pt: {
+    label: "ID do Vídeo",
+    watch: "Assistir",
+  },
+  en: {
+    label: "Video ID",
+    watch: "Watch",
+  },
+};
+
+export default function VideoInfo({ videoId, lang = "pt" }: VideoInfoProps) {
+  const t = translations[lang];
   const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
   return (
@@ -13,7 +26,7 @@ export default function VideoInfo({ videoId }: VideoInfoProps) {
         </svg>
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-white/50 text-xs uppercase tracking-wide font-medium mb-0.5">ID do Vídeo</p>
+        <p className="text-white/50 text-xs uppercase tracking-wide font-medium mb-0.5">{t.label}</p>
         <p className="text-white font-mono font-semibold text-sm truncate">{videoId}</p>
       </div>
       <a
@@ -22,7 +35,7 @@ export default function VideoInfo({ videoId }: VideoInfoProps) {
         rel="noopener noreferrer"
         className="shrink-0 flex items-center gap-1.5 text-xs text-red-400 hover:text-red-300 transition-colors font-medium"
       >
-        Assistir
+        {t.watch}
         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
             d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />

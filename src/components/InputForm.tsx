@@ -7,9 +7,39 @@ interface InputFormProps {
   defaultValue?: string;
   onResult?: (videoId: string) => void;
   compact?: boolean;
+  lang?: "pt" | "en";
 }
 
-export default function InputForm({ defaultValue = "", onResult, compact }: InputFormProps) {
+const translations = {
+  pt: {
+    placeholder: "https://www.youtube.com/watch?v=...",
+    button: "Get Thumbnail",
+    loading: "Buscando...",
+    errorEmpty: "Cole uma URL do YouTube para continuar.",
+    errorInvalid: "URL inválida. Tente novamente.",
+    errorConnection: "Erro de conexão. Verifique sua internet.",
+    paste: "Colar da área de transferência",
+    ariaLabel: "URL do vídeo do YouTube",
+  },
+  en: {
+    placeholder: "https://www.youtube.com/watch?v=...",
+    button: "Get Thumbnail",
+    loading: "Searching...",
+    errorEmpty: "Paste a YouTube URL to continue.",
+    errorInvalid: "Invalid URL. Please try again.",
+    errorConnection: "Connection error. Check your internet.",
+    paste: "Paste from clipboard",
+    ariaLabel: "YouTube Video URL",
+  },
+};
+
+export default function InputForm({
+  defaultValue = "",
+  onResult,
+  compact,
+  lang = "pt",
+}: InputFormProps) {
+  const t = translations[lang];
   const [url, setUrl] = useState(defaultValue);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +51,7 @@ export default function InputForm({ defaultValue = "", onResult, compact }: Inpu
     setError(null);
 
     if (!url.trim()) {
-      setError("Cole uma URL do YouTube para continuar.");
+      setError(t.errorEmpty);
       inputRef.current?.focus();
       return;
     }
@@ -38,7 +68,7 @@ export default function InputForm({ defaultValue = "", onResult, compact }: Inpu
       const data = await res.json();
 
       if (!res.ok || !data.id) {
-        setError(data.error ?? "URL inválida. Tente novamente.");
+        setError(data.error || t.errorInvalid);
         setLoading(false);
         return;
       }
@@ -46,10 +76,11 @@ export default function InputForm({ defaultValue = "", onResult, compact }: Inpu
       if (onResult) {
         onResult(data.id);
       } else {
-        router.push(`/youtube-thumbnail/${data.id}`);
+        const path = lang === "en" ? `/en/download/${data.id}` : `/youtube-thumbnail/${data.id}`;
+        router.push(path);
       }
     } catch {
-      setError("Erro de conexão. Verifique sua internet.");
+      setError(t.errorConnection);
     } finally {
       setLoading(false);
     }
@@ -86,7 +117,7 @@ export default function InputForm({ defaultValue = "", onResult, compact }: Inpu
             type="url"
             value={url}
             onChange={(e) => { setUrl(e.target.value); setError(null); }}
-            placeholder="https://www.youtube.com/watch?v=..."
+            placeholder={t.placeholder}
             className={`
               w-full pl-12 pr-12 py-4 rounded-2xl
               bg-white/10 backdrop-blur-sm
@@ -96,7 +127,7 @@ export default function InputForm({ defaultValue = "", onResult, compact }: Inpu
               transition-all duration-200
               ${compact ? "py-3 text-sm" : ""}
             `}
-            aria-label="URL do vídeo do YouTube"
+            aria-label={t.ariaLabel}
             autoComplete="off"
             spellCheck={false}
           />
@@ -104,7 +135,7 @@ export default function InputForm({ defaultValue = "", onResult, compact }: Inpu
             <button
               type="button"
               onClick={handlePaste}
-              title="Colar da área de transferência"
+              title={t.paste}
               className="absolute inset-y-0 right-0 pr-4 flex items-center text-white/50 hover:text-white transition-colors"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,7 +173,7 @@ export default function InputForm({ defaultValue = "", onResult, compact }: Inpu
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
               </svg>
-              Buscando...
+              {t.loading}
             </>
           ) : (
             <>
@@ -150,7 +181,7 @@ export default function InputForm({ defaultValue = "", onResult, compact }: Inpu
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                   d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              Get Thumbnail
+              {t.button}
             </>
           )}
         </button>
