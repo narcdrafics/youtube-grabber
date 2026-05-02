@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getThumbnails } from "@/lib/youtube";
+import { generateThumbnails } from "@/lib/youtube";
 import VideoInfo from "@/components/VideoInfo";
 import ThumbnailGrid from "@/components/ThumbnailGrid";
 import InputForm from "@/components/InputForm";
@@ -25,7 +25,7 @@ export default async function EnglishDownloadPage({ params }: Props) {
     notFound();
   }
 
-  const thumbnails = getThumbnails(id);
+  const thumbnails = generateThumbnails(id);
 
   return (
     <main className="min-h-screen bg-[#0a0a0f] relative overflow-hidden">
