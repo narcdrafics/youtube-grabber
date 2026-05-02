@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
 import InputForm from "@/components/InputForm";
+import TrendingSection from "@/components/TrendingSection";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "YouTube Thumbnail Downloader - Free HD Thumbnail Grabber",
@@ -101,7 +102,16 @@ export default function EnglishHomePage() {
           <span className="text-white/10">|</span>
           <a href="/" className="hover:text-white/40 transition-colors">Português</a>
         </footer>
+
+        <TrendingSection lang="en" />
       </div>
+
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4061239001754518"
+        crossOrigin="anonymous"
+        strategy="lazyOnload"
+      />
     </main>
   );
 }

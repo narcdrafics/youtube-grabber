@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { generateHomeMetadata } from "@/lib/seo";
 import InputForm from "@/components/InputForm";
+import TrendingSection from "@/components/TrendingSection";
+import Script from "next/script";
 
 export const metadata: Metadata = generateHomeMetadata();
 
@@ -130,7 +132,16 @@ export default function HomePage() {
             <a href="/en" className="text-red-500/50 hover:text-red-500 transition-colors font-medium">English Version</a>
           </div>
         </footer>
+
+        <TrendingSection lang="pt" />
       </div>
+
+      <Script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4061239001754518"
+        crossOrigin="anonymous"
+        strategy="lazyOnload"
+      />
     </main>
   );
 }
