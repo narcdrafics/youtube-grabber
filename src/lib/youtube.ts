@@ -53,9 +53,11 @@ export function extractVideoId(input: string): string | null {
   // Raw 11-char ID
   if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) return trimmed;
 
-  // SEO Slug format (some-title-ID) - extracting last 11 chars if preceded by a dash
-  const slugMatch = trimmed.match(/-([a-zA-Z0-9_-]{11})$/);
-  if (slugMatch) return slugMatch[1];
+  // SEO Slug format (some-title-ID or some-title-ID/)
+  // Extracting last 11 characters that match YouTube ID pattern
+  const cleanTrimmed = trimmed.replace(/\/$/, "");
+  const idMatch = cleanTrimmed.match(/([a-zA-Z0-9_-]{11})$/);
+  if (idMatch) return idMatch[1];
 
   return null;
 }
