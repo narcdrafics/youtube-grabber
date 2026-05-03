@@ -76,7 +76,7 @@ export default function InputForm({
       if (onResult) {
         onResult(data.id);
       } else {
-        const path = lang === "en" ? `/en/download/${data.id}` : `/youtube-thumbnail/${data.id}`;
+        const path = lang === "en" ? `/en/thumbnail/${data.id}` : `/thumbnail/${data.id}`;
         router.push(path);
       }
     } catch {

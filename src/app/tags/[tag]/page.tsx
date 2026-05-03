@@ -3,7 +3,7 @@ import InputForm from "@/components/InputForm";
 import Link from "next/link";
 
 interface Props {
-  params: { tag: string };
+  params: Promise<{ tag: string }>;
 }
 
 // Sugestões de tags por nicho (simplificado para PSEO)
@@ -16,20 +16,22 @@ const TAG_SUGGESTIONS: Record<string, string[]> = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const tag = decodeURIComponent(params.tag);
+  const { tag: tagParam } = await params;
+  const tag = decodeURIComponent(tagParam);
   const capitalizedTag = tag.charAt(0).toUpperCase() + tag.slice(1);
   
   return {
     title: `Tags de YouTube para ${capitalizedTag} - Melhores Tags 2026`,
     description: `Descubra as melhores tags de YouTube para o nicho ${tag}. Use nosso extrator de tags e downloader de thumbnails gratuito para crescer seu canal.`,
     alternates: {
-      canonical: `https://thumbnailsgrabber.web.app/tags/${params.tag}`,
+      canonical: `https://thumbnailsgrabber.web.app/tags/${tagParam}`,
     }
   };
 }
 
-export default function TagNichePage({ params }: Props) {
-  const tag = decodeURIComponent(params.tag);
+export default async function TagNichePage({ params }: Props) {
+  const { tag: tagParam } = await params;
+  const tag = decodeURIComponent(tagParam);
   const capitalizedTag = tag.charAt(0).toUpperCase() + tag.slice(1);
   const suggestions = TAG_SUGGESTIONS[tag.toLowerCase()] || [tag, "youtube", "video", "creator", "viral"];
 

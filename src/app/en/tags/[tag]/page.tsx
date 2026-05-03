@@ -3,7 +3,7 @@ import InputForm from "@/components/InputForm";
 import Link from "next/link";
 
 interface Props {
-  params: { tag: string };
+  params: Promise<{ tag: string }>;
 }
 
 const TAG_SUGGESTIONS: Record<string, string[]> = {
@@ -15,20 +15,22 @@ const TAG_SUGGESTIONS: Record<string, string[]> = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const tag = decodeURIComponent(params.tag);
+  const { tag: tagParam } = await params;
+  const tag = decodeURIComponent(tagParam);
   const capitalizedTag = tag.charAt(0).toUpperCase() + tag.slice(1);
   
   return {
     title: `YouTube Tags for ${capitalizedTag} - Best Keywords 2026`,
     description: `Find the best YouTube keywords and tags for the ${tag} niche. Use our free tag extractor and thumbnail downloader to grow your channel.`,
     alternates: {
-      canonical: `https://thumbnailsgrabber.web.app/en/tags/${params.tag}`,
+      canonical: `https://thumbnailsgrabber.web.app/en/tags/${tagParam}`,
     }
   };
 }
 
-export default function EnglishTagNichePage({ params }: Props) {
-  const tag = decodeURIComponent(params.tag);
+export default async function EnglishTagNichePage({ params }: Props) {
+  const { tag: tagParam } = await params;
+  const tag = decodeURIComponent(tagParam);
   const capitalizedTag = tag.charAt(0).toUpperCase() + tag.slice(1);
   const suggestions = TAG_SUGGESTIONS[tag.toLowerCase()] || [tag, "youtube", "video", "creator", "viral"];
 

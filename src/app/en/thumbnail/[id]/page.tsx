@@ -112,7 +112,7 @@ export default async function EnglishDownloadPage({ params }: Props) {
         <footer className="mt-20 pt-8 border-t border-white/5 text-center">
           <p className="text-white/10 text-[10px] uppercase tracking-widest mb-4">© 2026 YouTube Thumbnail Downloader</p>
           <div className="flex justify-center gap-6">
-             <Link href={`/youtube-thumbnail/${id}`} className="text-white/30 hover:text-white text-xs transition-colors underline decoration-white/10 underline-offset-4">Versão em Português</Link>
+             <Link href={`/thumbnail/${id}`} className="text-white/30 hover:text-white text-xs transition-colors underline decoration-white/10 underline-offset-4">Versão em Português</Link>
           </div>
         </footer>
       </div>

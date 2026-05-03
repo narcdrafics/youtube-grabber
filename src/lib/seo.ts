@@ -58,7 +58,7 @@ export function generateThumbnailPageMetadata(videoId: string): Metadata {
       images: [`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`],
     },
     alternates: {
-      canonical: `https://youtube-grabber.vercel.app/youtube-thumbnail/${videoId}`,
+      canonical: `https://youtube-grabber.vercel.app/thumbnail/${videoId}`,
     },
   };
 }
